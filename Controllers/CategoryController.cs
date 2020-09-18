@@ -1,6 +1,8 @@
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using snscz_api.Helpers;
+using snscz_api.Models;
 
 namespace snscz_api
 {
@@ -20,6 +22,22 @@ namespace snscz_api
         {
             var result = _context.Categories.ToList();
             return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SaveEmployer([FromBody]Categories category)
+        {
+            try
+            {
+                _context.Categories.Add(category);
+                await _context.SaveChangesAsync();
+                return Ok(category);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(new { message = "Error is" + ex.Message });
+            }
+            
         }
     }
 }
