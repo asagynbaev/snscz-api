@@ -39,5 +39,26 @@ namespace snscz_api
             }
             
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                var categories = await _context.Categories.FindAsync(id);
+                if (categories == null)
+                {
+                    return NotFound();
+                }
+
+                _context.Categories.Remove(categories);
+                await _context.SaveChangesAsync();
+                return new NoContentResult();
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(new { message = "Error is" + ex.Message });
+            }
+        }
     }
 }
