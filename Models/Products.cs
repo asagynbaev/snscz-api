@@ -13,6 +13,7 @@ namespace snscz_api.Models
         public float Price { get; set; }
         public float PricePerFullVolume { get; set; }
         public string ProductCode { get; set; }
+        public string Description { get; set; }
         public Composition Composition { get; set; }
         public Manufacturer Manufacturer { get; set; }
         public List<Allergens> Allergens { get; set; }
