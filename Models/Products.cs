@@ -8,6 +8,7 @@ namespace snscz_api.Models
     {
         [Key]
         public int Id { get; set; }
+        public Categories Category { get; set; }
         public string ProductName { get; set; }
         public VolumeEnum Volume { get; set; }
         public float Price { get; set; }
@@ -18,6 +19,7 @@ namespace snscz_api.Models
         public Manufacturer Manufacturer { get; set; }
         public List<Allergens> Allergens { get; set; }
         public string StorageConditions { get; set; }
+        public string Image { get; set; }
         public float OurPrice { get; set; }
 
     }
