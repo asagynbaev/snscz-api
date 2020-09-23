@@ -13,5 +13,6 @@ namespace snscz_api.Helpers
         public DbSet<Manufacturer> Manufacturers { get; set; }
         public DbSet<Composition> Compositions { get; set; }
         public DbSet<Allergens> Allergens { get; set; }
+        public DbSet<Images> Images { get; set; }
     } 
 }
