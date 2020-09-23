@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using snscz_api.Helpers;
+using snscz_api.Models;
 
 namespace snscz_api
 {
@@ -25,16 +26,23 @@ namespace snscz_api
         }
 
         [HttpPost()]
-        public async Task<string> UploadFile([FromForm] IFormFile file)
+        public async Task<IActionResult> UploadFile([FromForm] IFormFile file)
         {
-            string fName = file.FileName;
-            string path = Path.Combine(_environment.ContentRootPath, "Images/" + file.FileName);
+            Images img = new Images();
+            img.ImageTitle = file.FileName;
+            img.ImgGuid = new System.Guid();
             
-            using (var stream = new FileStream(path, FileMode.Create))
+            using (var fs1 = file.OpenReadStream())
+            using (var ms1 = new MemoryStream())
             {
-                await file.CopyToAsync(stream);
+                fs1.CopyTo(ms1);
+                img.ImageData = ms1.ToArray();
             }
-            return file.FileName; 
+
+            _context.Add(img);
+            await _context.SaveChangesAsync();
+
+            return Ok(img); 
         }
     }
 }
