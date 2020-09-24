@@ -20,8 +20,12 @@ namespace snscz_api
         [HttpGet]
         public IActionResult Get()
         {
-            var result = _context.Products.ToList();
-            return Ok(result);
+            var query = from p in _context.Products
+                join img in _context.Images on p.Image.Id equals img.Id
+                join volType in _context.VolumeTypes on p.VolumeType.Id equals volType.Id
+                select new { Product = p, Image = img, VolumeType = volType };
+                
+            return Ok(query);
         }
     }
 }
