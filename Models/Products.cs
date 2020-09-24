@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using snscz_api.Enums;
 
 namespace snscz_api.Models
 {
@@ -10,7 +9,8 @@ namespace snscz_api.Models
         public int Id { get; set; }
         public Categories Category { get; set; }
         public string ProductName { get; set; }
-        public VolumeType Volume { get; set; }
+        public float Volume { get; set; }
+        public VolumeType VolumeType { get; set; }
         public float Price { get; set; }
         public float PricePerFullVolume { get; set; }
         public string ProductCode { get; set; }
@@ -19,7 +19,7 @@ namespace snscz_api.Models
         public Manufacturer Manufacturer { get; set; }
         public List<Allergens> Allergens { get; set; }
         public string StorageConditions { get; set; }
-        public string Image { get; set; }
+        public Images Image { get; set; }
         public float OurPrice { get; set; }
 
     }

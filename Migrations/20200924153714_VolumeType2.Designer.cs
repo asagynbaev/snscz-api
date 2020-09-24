@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using snscz_api.Helpers;
@@ -9,9 +10,10 @@ using snscz_api.Helpers;
 namespace snscz_api.Migrations
 {
     [DbContext(typeof(SnsContext))]
-    partial class SnsContextModelSnapshot : ModelSnapshot
+    [Migration("20200924153714_VolumeType2")]
+    partial class VolumeType2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -154,8 +156,8 @@ namespace snscz_api.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<int?>("ImageId")
-                        .HasColumnType("integer");
+                    b.Property<string>("Image")
+                        .HasColumnType("text");
 
                     b.Property<int?>("ManufacturerId")
                         .HasColumnType("integer");
@@ -189,8 +191,6 @@ namespace snscz_api.Migrations
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("CompositionId");
-
-                    b.HasIndex("ImageId");
 
                     b.HasIndex("ManufacturerId");
 
@@ -233,10 +233,6 @@ namespace snscz_api.Migrations
                     b.HasOne("snscz_api.Models.Composition", "Composition")
                         .WithMany()
                         .HasForeignKey("CompositionId");
-
-                    b.HasOne("snscz_api.Models.Images", "Image")
-                        .WithMany()
-                        .HasForeignKey("ImageId");
 
                     b.HasOne("snscz_api.Models.Manufacturer", "Manufacturer")
                         .WithMany()
