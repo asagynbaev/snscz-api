@@ -14,5 +14,6 @@ namespace snscz_api.Helpers
         public DbSet<Composition> Compositions { get; set; }
         public DbSet<Allergens> Allergens { get; set; }
         public DbSet<Images> Images { get; set; }
+        public DbSet<VolumeType> VolumeTypes { get; set; }
     } 
 }

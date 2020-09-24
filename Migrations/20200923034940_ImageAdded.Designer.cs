@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using snscz_api.Helpers;
@@ -9,9 +10,10 @@ using snscz_api.Helpers;
 namespace snscz_api.Migrations
 {
     [DbContext(typeof(SnsContext))]
-    partial class SnsContextModelSnapshot : ModelSnapshot
+    [Migration("20200923034940_ImageAdded")]
+    partial class ImageAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -178,7 +180,7 @@ namespace snscz_api.Migrations
                     b.Property<string>("StorageConditions")
                         .HasColumnType("text");
 
-                    b.Property<int?>("VolumeId")
+                    b.Property<int>("Volume")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -189,27 +191,7 @@ namespace snscz_api.Migrations
 
                     b.HasIndex("ManufacturerId");
 
-                    b.HasIndex("VolumeId");
-
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("snscz_api.Models.VolumeType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("VolumeCode")
-                        .HasColumnType("text");
-
-                    b.Property<string>("VolumeName")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("VolumeTypes");
                 });
 
             modelBuilder.Entity("snscz_api.Models.Allergens", b =>
@@ -232,10 +214,6 @@ namespace snscz_api.Migrations
                     b.HasOne("snscz_api.Models.Manufacturer", "Manufacturer")
                         .WithMany()
                         .HasForeignKey("ManufacturerId");
-
-                    b.HasOne("snscz_api.Models.VolumeType", "Volume")
-                        .WithMany()
-                        .HasForeignKey("VolumeId");
                 });
 #pragma warning restore 612, 618
         }

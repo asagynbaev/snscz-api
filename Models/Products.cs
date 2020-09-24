@@ -10,7 +10,7 @@ namespace snscz_api.Models
         public int Id { get; set; }
         public Categories Category { get; set; }
         public string ProductName { get; set; }
-        public VolumeEnum Volume { get; set; }
+        public VolumeType Volume { get; set; }
         public float Price { get; set; }
         public float PricePerFullVolume { get; set; }
         public string ProductCode { get; set; }

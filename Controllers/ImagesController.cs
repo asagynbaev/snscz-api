@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -28,21 +29,30 @@ namespace snscz_api
         [HttpPost()]
         public async Task<IActionResult> UploadFile([FromForm] IFormFile file)
         {
-            Images img = new Images();
-            img.ImageTitle = file.FileName;
-            img.ImgGuid = new System.Guid();
-            
-            using (var fs1 = file.OpenReadStream())
-            using (var ms1 = new MemoryStream())
+            if (file != null)
             {
-                fs1.CopyTo(ms1);
-                img.ImageData = ms1.ToArray();
+                if (file.Length > 0)
+                {
+                    Images img = new Images();
+                    img.ImageTitle = file.FileName;
+                    img.ImgGuid = Guid.NewGuid();
+                    
+                    using (var fs1 = file.OpenReadStream())
+                    using (var ms1 = new MemoryStream())
+                    {
+                        fs1.CopyTo(ms1);
+                        img.ImageData = ms1.ToArray();
+                    }
+
+                    _context.Add(img);
+                    await _context.SaveChangesAsync();
+                    return Ok(img); 
+                }
+                else
+                    return BadRequest(new { message = "File size is 0" });
             }
-
-            _context.Add(img);
-            await _context.SaveChangesAsync();
-
-            return Ok(img); 
+            else
+                return BadRequest(new { message = "Empty file" });
         }
     }
 }
