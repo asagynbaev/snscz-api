@@ -21,11 +21,26 @@ namespace snscz_api
         public IActionResult Get()
         {
             var query = from p in _context.Products
-                join img in _context.Images on p.Image.Id equals img.Id
-                join volType in _context.VolumeTypes on p.VolumeType.Id equals volType.Id
+                join img in _context.Images on p.ImageId equals img.Id
+                join volType in _context.VolumeTypes on p.VolumeTypeId equals volType.Id
                 select new { Product = p, Image = img, VolumeType = volType };
                 
             return Ok(query);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SaveProduct([FromBody]Products product)
+        {
+            try
+            {
+                _context.Products.Add(product);
+                await _context.SaveChangesAsync();
+                return Ok(product);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(new { message = "Error is" + ex.Message });
+            }
         }
     }
 }
